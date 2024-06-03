@@ -3,7 +3,7 @@ designed to scan for API keys within specified patterns across various types of 
 
 # Installation
 ```
-https://github.com/XJOKZVO/Julib.git
+git clone https://github.com/XJOKZVO/Julib.git
 ```
 # Options:
 ```
