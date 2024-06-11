@@ -36,7 +36,7 @@ API_KEY_PATTERNS = {
   ],
   secret_token_pattern: [
     /['"]\b[0-9a-zA-Z]{20}\b['"]/,
-    /['"]\b[A-Z]{5}-[0-9]{4}-[a-z]{5}-[A-Z]{5}\b['"]/
+    /['"]\b[A-Z]{5}-[0-9]{4}-[a-z]{5}-[A-Z]{5}\b['"]/,
   ],
   aws_access_key_pattern: [
     /['"]\bAKIA[0-9A-Z]{16}\b['"]/
@@ -49,16 +49,23 @@ API_KEY_PATTERNS = {
     /['"]\b[A-Z0-9]{35,40}\b['"]/
   ],
   google_api_key_pattern: [
-    /['"]\bAIza[0-9A-Za-z_-]{35}\b['"]/
+    /['"]\bAIza[0-9A-Za-z_-]{35}\b['"]/,
+    /AIza[0-9A-Za-z\\-_]{35}/,
+    /[0-9]+-[0-9A-Za-z_]{32}\.apps\.googleusercontent\.com/,
+    /(?i)\bAIza[0-9A-Za-z\\-_]{35}\b/
   ],
   facebook_api_key_pattern: [
-    /['"]\b\d{15,16}\|.{27}\b['"]/
+    /['"]\b\d{15,16}\|.{27}\b['"]/,
+    /EAACEdEose0cBA[0-9A-Za-z]+/,
+    /(?i)(facebook|fb)(.{0,20})?['\"][0-9]{13,17}/,
+    /(?i)facebook.*['|\"]\w{140}['|\"]/
   ],
   twitter_api_key_pattern: [
     /['"][1-9][0-9]{5,}[a-zA-Z0-9]{25,}['"]/
   ],
   slack_api_key_pattern: [
-    /['"]xox[baprs]-[0-9]{12}-[0-9]{12}-[a-zA-Z0-9]{24}['"]/
+    /['"]xox[baprs]-[0-9]{12}-[0-9]{12}-[a-zA-Z0-9]{24}['"]/,
+    /(?i)slack.*['|\"]xox[baprs]-\w{12}-\w{12}-\w{12}['|\"]/
   ],
   stripe_api_key_pattern: [
     /['"]sk_test_[0-9a-zA-Z]{24}['"]/,
@@ -74,20 +81,169 @@ API_KEY_PATTERNS = {
     /['"]key-[0-9a-zA-Z]{32}['"]/
   ],
   firebase_api_key_pattern: [
-    /['"]AIza[0-9A-Za-z_-]{35}['"]/
+    /['"]AIza[0-9A-Za-z_-]{35}['"]/,
+    /AAAA[A-Za-z0-9_-]{7}:[A-Za-z0-9_-]{140}/
   ],
   digitalocean_api_key_pattern: [
     /['"]\b[a-zA-Z0-9_-]{64}\b['"]/
   ],
   heroku_api_key_pattern: [
-    /['"]\b[a-zA-Z0-9_-]{64}\b['"]/
+    /['"]\b[a-zA-Z0-9_-]{64}\b['"]/,
+    /(?i)heroku.*['|\"]\w{32}['|\"]/
   ],
   mongodb_atlas_api_key_pattern: [
-    /['"]\b[a-zA-Z0-9_-]{36}\b['"]/
+    /['"]\b[a-zA-Z0-9_-]{36}\b['"]/,
+    /['"]\b[A-Za-z0-9]{20}\.[A-Za-z0-9]{20}\b['"]/,
+    /['"]\b[A-Za-z0-9_-]{50,100}\b['"]/
   ],
   rapidapi_key_pattern: [
     /['"]\b[a-zA-Z0-9_-]{32}\b['"]/
-  ]
+  ],
+  artifactory_api_token: [
+    /(?:\s|=|:|^|"|&)AKC[a-zA-Z0-9]{10,}/
+  ],
+  cloudinary: [
+    /cloudinary:\/\/[0-9]{15}:[0-9A-Za-z]+@[a-z]+/
+  ],
+  email: [
+    /(?<=mailto:)[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z.-]+/
+  ],
+  pgp_private_key_block: [
+    /-----BEGIN PGP PRIVATE KEY BLOCK-----.*?-----END PGP PRIVATE KEY BLOCK-----/m
+  ],
+  ssh_private_key: [
+    /-----BEGIN (?:RSA|DSA|EC|OPENSSH) PRIVATE KEY-----.+?-----END (?:RSA|DSA|EC|OPENSSH) PRIVATE KEY-----/m
+  ],
+  ssh_public_key: [
+    /ssh-ed25519\s+[A-Za-z0-9\/+=]+\s+[^\n]+/
+  ],
+  aws_access_key_id: [
+    /['"]\bAKIA[0-9A-Z]{16}\b['"]/
+  ],
+  amazon_mws_auth_token: [
+    /['"]\bamzn\.mws\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b['"]/
+  ],
+  authorization_basic_credentials: [
+    /Basic\s+[A-Za-z0-9_=-]+/
+  ],
+  authorization_bearer_token: [
+    /Bearer\s+[A-Za-z0-9_=-]+/
+  ],
+  jwt_token_pattern: [
+    /Bearer\s+[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+/
+  ],
+  windows_live_api_key: [
+    /(?i)windowslive.*['|\"][0-9a-f]{22}['|\"]/
+  ],
+  bitcoin_private_key_pattern: [
+    /[5KL][1-9A-HJ-NP-Za-km-z]{51}/,
+    /[5KL][1-9A-HJ-NP-Za-km-z]{50,51}$/
+  ],
+  ethereum_private_key:[
+    /0x[a-fA-F0-9]{64}/
+  ],
+  ripple_secret_key: [
+    /['"]s[a-zA-Z0-9]{53}\b['"]/
+  ],
+  litecoin_private_key_wif: [
+    /['"][LK][1-9A-HJ-NP-Za-km-z]{50}\b['"]/
+  ],
+  bitcoin_cash_private_key_wif: [
+    /['"][Kk][1-9A-HJ-NP-Za-km-z]{50,51}\b['"]/
+  ],
+  cardano_extended_private_key: [
+    /['"]xprv[a-zA-Z0-9]{182}\b['"]/
+  ],
+  monero_private_spend_key: [
+    /['"]4[0-9AB][1-9A-HJ-NP-Za-km-z]{93}\b['"]/
+  ],
+  monero_private_view_key: [
+    /['"]9[1-9A-HJ-NP-Za-km-z]{94}\b['"]/
+  ],
+  zcash_private_key: [
+    /['"]sk[a-zA-Z0-9]{95}\b['"]/
+  ],
+  tezos_secret_key: [
+    /['"]edsk[a-zA-Z0-9]{54}\b['"]/
+  ],
+  eos_private_key: [
+    /['"]5[a-zA-Z0-9]{50}\b['"]/
+  ],
+  stellar_secret_key: [
+    /['"]S[a-zA-Z0-9]{55}\b['"]/
+  ],
+  neo_private_key: [
+    /['"]K[a-zA-Z0-9]{51}\b['"]/
+  ],
+  iota_seed: [
+    /['"][A-Z9]{81}\b['"]/
+  ],
+  tron_private_key: [
+    /['"]0x[a-fA-F0-9]{64}\b['"]/
+  ],
+  vechain_private_key: [
+    /['"]0x[a-fA-F0-9]{64}\b['"]/
+  ],
+  avalanche_private_key: [
+    /['"]PrivateKey-[a-zA-Z0-9]{58}\b['"]/
+  ],
+  polkadot_private_key: [
+    /['"]0x[a-fA-F0-9]{64}\b['"]/
+  ],
+  chainlink_private_key: [
+    /['"]0x[a-fA-F0-9]{64}\b['"]/
+  ],
+  cosmos_private_key: [
+    /['"]0x[a-fA-F0-9]{64}\b['"]/
+  ],
+  filecoin_private_key: [
+    /['"]f1[a-zA-Z0-9]{98}\b['"]/
+  ],
+  algorand_private_key: [
+    /['"]([A-Z2-7]{58})\b['"]/
+  ],
+  near_protocol_private_key: [
+  /['"]([0-9a-fA-F]{64})['"]/
+  ],
+  hedera_hashgraph_private_key: [ 
+    /302e020100300506032b657004220420[a-fA-F0-9]{64}300506032b657001020420[a-fA-F0-9]{64}$/ 
+  ],
+  circleci: [ 
+    /(?i)circleci.*['|\"]\w{40}['|\"]/ 
+  ],
+  hootsuite: [ 
+    /(?i)hootsuite.*['|\"]\w{12}['|\"]/ 
+  ],
+  twitch: [ 
+    /(?i)twitch(.{0,20})?['\"][0-9a-z]{30}['\"]/,
+    /oauth:[a-z0-9]+/
+  ],
+  salesforce: [ 
+    /(?i)salesforce.*['|\"]\w{300}['|\"]/ 
+  ],
+  zoho: [ 
+    /(?i)zoho.*['|\"]\w{32}['|\"]/ 
+  ],
+  asana: [ 
+    /(?i)asana.*['|\"]\w{64}['|\"]/ 
+  ],
+  git: [ 
+    /(?i)git.*['|\"]\w{40}['|\"]/ 
+  ],
+  splunk: [ 
+    /(?i)splunk.*token\s*:\s*['|\"]\w{32}['|\"]/ 
+  ],
+  harmony_private_key: [
+  /['"]0x[a-fA-F0-9]{64}\b['"]/,
+  /one1[a-zA-Z0-9]{38}$/
+  ],
+  harmony_bls_key: [
+  /['"]bls[a-zA-Z0-9]{86}\b['"]/,
+  /one1p[a-zA-Z0-9]{55}$/
+  ],
+  mysql_connection_pattern: [
+  /mysql:\/\/[a-zA-Z0-9]+:[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+/
+  ],
 }
 
 # Function to search for API keys in a string
@@ -120,10 +276,31 @@ def scan_js_file(file_path, patterns, verbose)
   end
 end
 
+# Function to clean and validate URLs
+def clean_and_validate_urls(url_list)
+  valid_urls = []
+  url_list.each do |line|
+    line.split(',').each do |url|
+      url.strip!
+      begin
+        uri = URI.parse(url)
+        if uri.kind_of?(URI::HTTP) || uri.kind_of?(URI::HTTPS)
+          valid_urls << url
+        else
+          puts "Invalid URL format: #{url}"
+        end
+      rescue URI::InvalidURIError
+        puts "Invalid URL format: #{url}"
+      end
+    end
+  end
+  valid_urls
+end
+
 # Function to scan a web page for API keys
 def scan_web_page(url, patterns, verbose)
   begin
-    page_content = URI.open(url, "User-Agent" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36").read
+    page_content = URI.open(url, "User-Agent" => "Mozilla/5.0").read
     keys_found = {}
     patterns.each do |key_type, key_patterns|
       keys = find_api_keys(page_content, key_patterns)
@@ -145,9 +322,10 @@ end
 def scan_web_pages_from_file(file_path, patterns, verbose, output_file=nil)
   begin
     urls = File.readlines(file_path).map(&:strip)
+    valid_urls = clean_and_validate_urls(urls)
     File.open(output_file, 'w') if output_file
     all_keys = []
-    urls.each do |url|
+    valid_urls.each do |url|
       keys = scan_web_page(url, patterns, verbose)
       all_keys.concat(keys)
       File.write(output_file, "Potential API keys found in #{url}: #{keys}\n", mode: 'a') if output_file
