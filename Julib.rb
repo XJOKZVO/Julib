@@ -39,14 +39,24 @@ API_KEY_PATTERNS = {
     /['"]\b[A-Z]{5}-[0-9]{4}-[a-z]{5}-[A-Z]{5}\b['"]/,
   ],
   aws_access_key_pattern: [
-    /['"]\bAKIA[0-9A-Z]{16}\b['"]/
+    /['"]\bAKIA[0-9A-Z]{16}\b['"]/,
+    /(A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}/
   ],
   azure_api_key_pattern: [
     /['"]\b[A-Za-z0-9]{32}\.Azure\.API\.Key['"]/
   ],
   github_api_key_pattern: [
     /['"]\b[a-z0-9]{40}\b['"]/,
-    /['"]\b[A-Z0-9]{35,40}\b['"]/
+    /['"]\b[A-Z0-9]{35,40}\b['"]/,
+    /(ghu|ghs)_[0-9a-zA-Z]{36}/,
+    /github_pat_[0-9a-zA-Z_]{82}/,
+    /gho_[0-9a-zA-Z]{36}/,
+    /ghp_[0-9a-zA-Z]{36}/,
+    /ghr_[0-9a-zA-Z]{36}/,
+    /glpat-[0-9a-zA-Z\-\_]{20/,
+    /glptt-[0-9a-f]{40}/,
+    /GR1348941[0-9a-zA-Z\-\_]{20}/,
+    /(?i)(?:gitter)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9_-]{40})(?:['|\"|\n|\r|\s|\x60|;]|$)/,
   ],
   google_api_key_pattern: [
     /['"]\bAIza[0-9A-Za-z_-]{35}\b['"]/,
@@ -58,7 +68,8 @@ API_KEY_PATTERNS = {
     /['"]\b\d{15,16}\|.{27}\b['"]/,
     /EAACEdEose0cBA[0-9A-Za-z]+/,
     /(?i)(facebook|fb)(.{0,20})?['\"][0-9]{13,17}/,
-    /(?i)facebook.*['|\"]\w{140}['|\"]/
+    /(?i)facebook.*['|\"]\w{140}['|\"]/,
+    /(?i)(?:facebook)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-f0-9]{32})(?:['|\"|\n|\r|\s|\x60|;]|$)/
   ],
   twitter_api_key_pattern: [
     /['"][1-9][0-9]{5,}[a-zA-Z0-9]{25,}['"]/
@@ -69,7 +80,8 @@ API_KEY_PATTERNS = {
   ],
   stripe_api_key_pattern: [
     /['"]sk_test_[0-9a-zA-Z]{24}['"]/,
-    /['"]rk_test_[0-9a-zA-Z]{24}['"]/
+    /['"]rk_test_[0-9a-zA-Z]{24}['"]/,
+    /(?i)(sk|pk)_(test|live)_[0-9a-z]{10,32}/
   ],
   twilio_api_key_pattern: [
     /['"]SK[0-9a-fA-F]{32}\b['"]/
@@ -106,7 +118,8 @@ API_KEY_PATTERNS = {
     /cloudinary:\/\/[0-9]{15}:[0-9A-Za-z]+@[a-z]+/
   ],
   email: [
-    /(?<=mailto:)[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z.-]+/
+    /(?<=mailto:)[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z.-]+/,
+    /([a-zA-Z0-9][_\.\w]*)+@([a-zA-Z0-9][\w\-]*\.[a-zA-Z]{2,})\b(?:(?:(?i)js|css|jpg|jpeg|png|ico)\b\\1)*/
   ],
   pgp_private_key_block: [
     /-----BEGIN PGP PRIVATE KEY BLOCK-----.*?-----END PGP PRIVATE KEY BLOCK-----/m
@@ -116,9 +129,6 @@ API_KEY_PATTERNS = {
   ],
   ssh_public_key: [
     /ssh-ed25519\s+[A-Za-z0-9\/+=]+\s+[^\n]+/
-  ],
-  aws_access_key_id: [
-    /['"]\bAKIA[0-9A-Z]{16}\b['"]/
   ],
   amazon_mws_auth_token: [
     /['"]\bamzn\.mws\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b['"]/
@@ -243,6 +253,42 @@ API_KEY_PATTERNS = {
   ],
   mysql_connection_pattern: [
   /mysql:\/\/[a-zA-Z0-9]+:[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+/
+  ],
+  zendesk_secret_key: [
+    /(?i)(?:zendesk)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9]{40})(?:['|\"|\n|\r|\s|\x60|;]|$)/
+  ],
+  yandex_aws_access_token: [
+    /(?i)(?:yandex)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(YC[a-zA-Z0-9_\-]{38})(?:['|\"|\n|\r|\s|\x60|;]|$)/
+  ],
+  yandex_api_key: [
+    /(?i)(?:yandex)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}(AQVN[A-Za-z0-9_\-]{35,38})(?:['|\"|\n|\r|\s|\x60|;]|$)/
+  ],
+  okta_access_token: [
+    /(?i)(?:okta)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([a-z0-9=_\-]{42})(?:['|\"|\n|\r|\s|\x60|;]|$)/
+  ],
+  pypi_upload_token: [
+    /pypi-AgEIcHlwaS5vcmc[A-Za-z0-9\-_]{50,1000}/
+  ],
+  lob_api_key: [
+    /(?i)(?:lob)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}((live|test)_[a-f0-9]{35})(?:['|\"|\n|\r|\s|\x60|;]|$)/
+  ],
+  lob_publishable_api_key: [
+    /(?i)(?:lob)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}((test|live)_pub_[a-f0-9]{31})(?:['|\"|\n|\r|\s|\x60|;]|$)/
+  ],
+  gcp_api_key: [
+    /(?i)\b(AIza[0-9A-Za-z\\-_]{35})(?:['|\"|\n|\r|\s|\x60|;]|$)/
+  ],
+  generic_api_key: [
+    /(?i)(api_key|apikey|secret)(.{0,20})?['|"][0-9a-zA-Z]{16,45}['|"]/
+  ],
+  age_secret_key: [
+    /AGE-SECRET-KEY-1[QPZRY9X8GF2TVDW0S3JN54KHCE6MUA7L]{58}/
+  ],
+  clojars_api_token: [
+    /(?i)(CLOJARS_)[a-z0-9]{60}/
+  ],
+  doppler_api_token: [
+    /(dp\.pt\.)(?i)[a-z0-9]{43}/
   ],
 }
 
