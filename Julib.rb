@@ -87,6 +87,9 @@ API_KEY_PATTERNS = {
   ],
   rapidapi_key_pattern: [
     /['"]\b[a-zA-Z0-9_-]{32}\b['"]/
+  ],
+  Google_API_Key: [
+        /AIza[0-9A-Za-z\\-_]{35}/
   ]
 }
 
